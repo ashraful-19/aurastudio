@@ -42,8 +42,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Initialize Plyr on dynamically added videos
         const players = Array.from(container.querySelectorAll("video")).map(video => new Plyr(video, {
-            controls: ["play-large", "play", "mute"],
-            autoplay: false,
+          controls: ['play-large', 'play', 'mute', 'volume', 'fullscreen'],
+          autoplay: false,
         }));
 
         // Add new players to global array
@@ -350,25 +350,49 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-  // Get the button
+// Get the button and the icon
 let scrollTopBtn = document.getElementById("scrollTopBtn");
+let scrollIcon = document.getElementById("scrollIcon");
+let isScrolledHalfway = false;
 
-// Function to check scroll position and show/hide button
+// Function to check the scroll position and show/hide button
 function checkScroll() {
-  if (window.pageYOffset > 200) {
+  let scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+  let halfwayPoint = document.body.scrollHeight / 2;
+
+  // Show button after scrolling 100px
+  if (scrollPosition > 100) {
     scrollTopBtn.style.display = "block";
   } else {
     scrollTopBtn.style.display = "none";
+  }
+
+  // Change arrow direction when scrolling past halfway
+  if (scrollPosition > halfwayPoint) {
+    scrollIcon.classList.add("rotate-up"); // Rotate to up arrow
+    isScrolledHalfway = true;
+  } else {
+    scrollIcon.classList.remove("rotate-up"); // Default down arrow
+    isScrolledHalfway = false;
   }
 }
 
 // Add an event listener for scroll
 window.addEventListener("scroll", checkScroll);
 
-// Scroll to the top when the button is clicked
+// Scroll to the top or bottom when the button is clicked
 scrollTopBtn.addEventListener("click", function() {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+  if (isScrolledHalfway) {
+    // Scroll to the top
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  } else {
+    // Scroll to the bottom
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth"
+    });
+  }
 });
