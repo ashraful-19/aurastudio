@@ -71,7 +71,7 @@ select::after {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .modal-content {
@@ -152,22 +152,28 @@ header {
   font-family: "Roboto", sans-serif;
   margin: 20px auto;
   position: sticky;
-  transition: bottom 0.5s ease; /* Smooth transition */
+  transition: bottom 1s ease, top 1s ease; /* Smooth transition */
   bottom: -20px; /* Initially hide at bottom */
   max-width: 900px;
+  
 }
 
 /* When fixed at the bottom */
  header.fixed {
   position: fixed;
-  bottom: 20px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 /* When the header is hidden */
 header.hidden {
+  position: fixed;
+  top: 20px;
   bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+
 }
 
 div.nav-wrap {
@@ -496,6 +502,17 @@ div.nav-wrap {
   width: var(--plyr-control-icon-size,12px);
 }
 
+
+.plyr__volume {
+  align-items: center;
+  display: none;
+  position: relative;
+}
+
+
+.plyr:hover .plyr__volume {
+          display: flex;
+      }
 .testimonials {
   display: flex;
   padding: 20px;
@@ -851,12 +868,12 @@ div.nav-wrap {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.85); /* Darker background with high opacity */
+  background-color: rgba(0, 0, 0, 0.15); /* Darker background with high opacity */
   backdrop-filter: blur(6px); /* Slightly stronger blur effect */
 }
 
 .modal-content {
-  background: linear-gradient(135deg, #060b18, #100c21); /* Premium dark gradient background */
+  background-color: white;
   color: #e0e0e0; /* Soft light text color for a premium feel */
   margin: 5% auto; /* Centered */
   padding: 25px;
@@ -893,7 +910,7 @@ div.nav-wrap {
 
 .modal-content h2 {
   margin-top: 0;
-  color: #f0f0f0; /* Lighter color for heading */
+  color: #000000; /* Lighter color for heading */
 }
 
 .modal-content form {
@@ -993,8 +1010,27 @@ div.nav-wrap {
   cursor: pointer;
   padding: 15px;
   border-radius: 10px;
+  transition: transform 0.5s ease;
+  transform: rotate(180deg); /* Rotate 180° to change the direction */
+
+}
+
+#scrollIcon {
+  transition: transform 0.5s ease;
 }
 
 #scrollTopBtn:hover {
   background-color: #150725;
 }
+
+.rotate-up {
+  transform: rotate(180deg); /* Rotate 180° to change the direction */
+}
+
+
+.calendar-iframe {
+  width: 100%;
+  height: 650px; /* Adjust height as needed */
+  border: none;
+}
+
