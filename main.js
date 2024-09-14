@@ -218,46 +218,20 @@ $(document).ready(function () {
 
 
 
-$(document).ready(function () {
-    let lastScrollTop = 0;
-    const header = $('#navbar');
+document.addEventListener('scroll', function() {
+  const header = document.querySelector('header');
+  const scrollPosition = window.scrollY;
 
-    // Initially hide the navbar from the top
-    header.addClass('hidden-from-bottom');
-
-    $(window).scroll(function () {
-        let scrollTop = $(this).scrollTop();
-
-        // Scroll down
-        if (scrollTop > 100 && lastScrollTop <= scrollTop) {
-            // If we scroll down, hide the navbar from the bottom and show it from the top
-            header.removeClass('hidden-from-bottom').addClass('visible-from-bottom');
-        } 
-
-        // Scroll up and show again if less than 100px from top
-        if (scrollTop <= 100 && lastScrollTop > scrollTop) {
-            // If scrolling up back to top area, hide from top and show at the bottom
-            header.removeClass('visible-from-bottom').addClass('hidden-from-bottom');
-        }
-
-        lastScrollTop = scrollTop;
-    });
-});
-window.onscroll = function() {
-  var header = document.querySelector('header');
-  var scrollPosition = window.scrollY || document.documentElement.scrollTop;
-
-  // If scrolled past 100px from the top, fix the header to bottom
-  if (scrollPosition > 100) {
-    header.classList.add('fixed');
-    header.classList.remove('hidden');
-  } 
-  // If scrolling back to the top, hide the header
-  else {
-    header.classList.add('hidden');
-    header.classList.remove('fixed');
+  if (scrollPosition > 200) {
+    // User scrolled past 200px, move navbar to appear from bottom
+    header.classList.add('hidden-bottom');
+    header.classList.remove('hidden-top');
+  } else {
+    // User is within 200px from the top, move navbar back to the top
+    header.classList.add('hidden-top');
+    header.classList.remove('hidden-bottom');
   }
-};
+});
 
 
 function animateCounter(element, start, end, duration) {
@@ -277,9 +251,9 @@ function handleIntersection(entries, observer) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       const counters = entry.target.querySelectorAll('h2');
-      animateCounter(counters[0], 0, 1000, 5000); // 1,000+ Successful Projects
-      animateCounter(counters[1], 0, 7, 5000); // 7+ Years of Experience
-      animateCounter(counters[2], 0, 12, 5000); // 12+ Team Members
+      animateCounter(counters[0], 0, 1000, 1000); // 1,000+ Successful Projects
+      animateCounter(counters[1], 0, 7, 1000); // 7+ Years of Experience
+      animateCounter(counters[2], 0, 12, 1000); // 12+ Team Members
       observer.unobserve(entry.target); // Stop observing after animation
     }
   });
@@ -338,7 +312,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     
     const targetId = this.getAttribute('href');
     const targetElement = document.querySelector(targetId);
-    const offset = 180;  // Adjust this value according to your header height
+    const offset = 20;  // Adjust this value according to your header height
 
     const elementPosition = targetElement.getBoundingClientRect().top;
     const offsetPosition = elementPosition + window.scrollY - offset;
